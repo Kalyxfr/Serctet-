@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique des inscriptions</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        input[type="password"] {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            width: 80%;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            background: #1E90FF;
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #3742fa;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ffffff;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        #historique {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Connexion</h1>
+        <form id="loginForm">
+            <label for="password">Mot de passe :</label><br>
+            <input type="password" id="password" required><br>
+            <button type="submit">Se connecter</button>
+        </form>
+
+        <div id="historique">
+            <h1>Historique des inscriptions</h1>
+            <table id="historiqueTable">
+                <tr>
+                    <th>Email</th>
+                    <th>Date d'inscription</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const password = document.getElementById('password').value;
+            const validPassword = 'Sniperpro_.off123';
+
+            if (password === validPassword) {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('historique').style.display = 'block';
+
+                let emails = JSON.parse(localStorage.getItem('emails')) || [];
+                const table = document.getElementById('historiqueTable');
+
+                emails.forEach(email => {
+                    const row = table.insertRow();
+                    const emailCell = row.insertCell(0);
+                    const dateCell = row.insertCell(1);
+                    emailCell.textContent = email.email;
+                    dateCell.textContent = email.date;
+                });
+            } else {
+                alert('Mot de passe incorrect');
+            }
+        });
+    </script>
+</body>
+</html>
